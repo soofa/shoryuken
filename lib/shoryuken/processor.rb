@@ -59,6 +59,7 @@ module Shoryuken
       # Add special check for Soofa messages that have somehow been sent to SQS without terminating '}'
       # They also have a bunch of corrupted characters at the end, but this check seems to catch them
       if sqs_msg.body[-1] != "}"  # could also check for last character being corrupted, but this seems to work
+        puts "Failed parsing unterminated message: #{sqs_msg.body}"
         return { device: "FAIL-CORRUPTED", message: "{status}Corrupted message: #{sqs_msg.body}"}
       end
       logger.error { "Error parsing the message body: #{e.message}\nbody_parser: #{body_parser}\nsqs_msg.body: #{sqs_msg.body}" }
