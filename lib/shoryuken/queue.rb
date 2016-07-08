@@ -80,14 +80,14 @@ module Shoryuken
       body = options[:message_body]
       if body.is_a?(Hash)
         # TODO - remove this if statement when we're not logging incoming messages from this device (kasey)
-        if options[:message_body] && options[:message_body][:message] && (options[:message_body][:message].include? "20B-A19")
-          puts "incoming message: #{options}"
-        end
+        # if options[:message_body] && options[:message_body][:message] && (options[:message_body][:message].include? "20B-A19")
+        #   puts "incoming message: #{options}"
+        # end
         options[:message_body] = JSON.dump(body)
         # TODO - remove this if statement when we're not logging incoming messages from this device (kasey)
-        if options[:message_body].include? "20B-A19"
-          puts "incoming message (after JSON.dump): #{options}"
-        end
+        # if options[:message_body].include? "20B-A19"
+        #   puts "incoming message (after JSON.dump): #{options}"
+        # end
       elsif !body.is_a?(String)
         fail ArgumentError, "The message body must be a String and you passed a #{body.class}"
       end
