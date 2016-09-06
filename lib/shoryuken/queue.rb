@@ -84,7 +84,25 @@ module Shoryuken
         fail ArgumentError, "The message body must be a String and you passed a #{body.class}"
       end
 
+      verify_all_ascii!(options)
+
       options
+    end
+
+    def verify_all_ascii!(options)
+      body = options[:message_body]
+      if not body.ascii_only?
+        puts "Received message with non-ASCII characters. Replacing non-ascii characters with underscores. Original message body: #{options[:message_body]}"
+        new_body = ""
+        body.each_char do |c|
+          if c.ascii_only?
+            new_body += c
+          else
+            new_body += '_'
+          end
+        end
+        options[:message_body] = new_body
+      end
     end
   end
 end
